@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Learning Path — Student Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+[data-theme="light"]{--bg:#f5f6fa;--surface:#fff;--surface2:#f0f2f8;--surface3:#e8eaf3;--border:#e2e5ef;--text:#1a1d2e;--text2:#6b7280;--text3:#9ca3af;--primary:#6366f1;--primary-bg:#eef2ff;--success:#059669;--warning:#d97706;--danger:#dc2626;--shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--surface2:#232638;--surface3:#2d3148;--border:rgba(255,255,255,.08);--text:#e8eaf3;--text2:#8b92a5;--text3:#4b5168;--primary:#818cf8;--primary-bg:rgba(99,102,241,.12);--success:#10b981;--warning:#f59e0b;--danger:#ef4444;--shadow:0 1px 4px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s}
+.sidebar{width:220px;min-width:220px;height:100vh;position:fixed;left:0;top:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.logo{padding:20px 18px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}.logo-icon{width:36px;height:36px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:17px}.logo-name{font-size:14px;font-weight:700;color:var(--text)}.logo-tag{font-size:10.5px;color:var(--text3)}
+.nav{flex:1;padding:12px 10px;overflow-y:auto}.nav::-webkit-scrollbar{width:0}.ns{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:12px 8px 5px}
+.na{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;color:var(--text2);text-decoration:none;font-size:13.5px;font-weight:500;transition:.15s;margin-bottom:2px}.na:hover{color:var(--text);background:var(--surface2)}.na.on{color:var(--primary);background:var(--primary-bg);font-weight:600}.ni{font-size:15px;width:20px;text-align:center}
+.sfoot{padding:12px 14px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px}.uav{width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}.unm{font-size:12.5px;font-weight:600;color:var(--text)}.url{font-size:11px;color:var(--text3)}.lb{margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:7px;border:1px solid var(--border);color:var(--text3);text-decoration:none;transition:.15s}.lb:hover{color:var(--danger);border-color:var(--danger)}
+.main{margin-left:220px;flex:1;padding:24px 28px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.page-title{font-family:'DM Serif Display',serif;font-size:26px;color:var(--text);margin-bottom:3px}.page-sub{font-size:13px;color:var(--text2)}.tt{width:38px;height:38px;border-radius:9px;background:var(--surface);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.ct{font-size:14px;font-weight:700;color:var(--text)}
+.bar-bg{height:5px;background:var(--surface3);border-radius:99px;overflow:hidden}.bar-fill{height:100%;border-radius:99px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.toast{position:fixed;bottom:22px;right:22px;padding:12px 18px;border-radius:10px;font-size:13.5px;font-weight:600;display:none;z-index:999;background:var(--success);color:#fff}
+
+.path-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pt{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text2);transition:.15s}.pt:hover{color:var(--text)}.pt.on{background:var(--primary-bg);border-color:var(--primary);color:var(--primary)}
+.timeline{position:relative;padding-left:32px}
+.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:var(--border)}
+.titem{position:relative;margin-bottom:16px}
+.tdot{position:absolute;left:-21px;top:16px;width:20px;height:20px;border-radius:50%;border:3px solid var(--surface);display:flex;align-items:center;justify-content:center;font-size:10px}
+.tdot.done{background:var(--success);color:#fff}.tdot.current{background:var(--primary);color:#fff}.tdot.weak{background:var(--danger);color:#fff}.tdot.pending{background:var(--surface3);color:var(--text3)}
+.tcard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+.tcard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.tcard-title{font-size:14px;font-weight:700;color:var(--text)}.tcard-desc{font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:10px}
+.pri-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px}
+.pri-h{background:#fee2e2;color:#991b1b}.pri-m{background:#fef3c7;color:#92400e}.pri-l{background:#d1fae5;color:#065f46}[data-theme="dark"] .pri-h{background:rgba(220,38,38,.15);color:#fca5a5}[data-theme="dark"] .pri-m{background:rgba(217,119,6,.15);color:#fcd34d}[data-theme="dark"] .pri-l{background:rgba(5,150,105,.15);color:#6ee7b7}
+.topic-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.tchip{font-size:11px;padding:3px 9px;border-radius:99px;background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.ai-note{background:var(--primary-bg);border:1px solid var(--primary);border-radius:9px;padding:12px 14px;font-size:12.5px;color:var(--text2);line-height:1.6;display:none;margin-bottom:10px}
+.btn-sm{padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:.15s}
+.btn-ai{background:var(--primary-bg);color:var(--primary);border:1px solid var(--primary)}.btn-ai:hover{background:var(--primary);color:#fff}
+.btn-done{background:#d1fae5;color:#065f46;border:1px solid #059669}[data-theme="dark"] .btn-done{background:rgba(5,150,105,.15);color:#6ee7b7}
+.btn-done.marked{background:var(--surface3);color:var(--text3);border-color:var(--border)}
+
+</style>
+</head>
+<body><aside class="sidebar"><div class="logo"><div class="logo-icon">🧠</div><div><div class="logo-name">LearnAI</div><div class="logo-tag">Student Portal</div></div></div><nav class="nav"><div class="ns">Main</div><a href="/student/dashboard" class="na"><span class="ni">📊</span> Dashboard</a><a href="/student/subjects" class="na"><span class="ni">📚</span> Subjects</a><a href="/student/quiz/General" class="na"><span class="ni">✏️</span> Take Quiz</a><div class="ns">Learning</div><a href="/student/path" class="na on"><span class="ni">🗺️</span> Learning Path</a><a href="/student/notes" class="na"><span class="ni">📝</span> AI Notes</a><a href="/student/chatbot" class="na"><span class="ni">🤖</span> AI Chatbot</a><div class="ns">Account</div><a href="/student/profile" class="na"><span class="ni">👤</span> Profile</a></nav><div class="sfoot"><div class="uav">AK</div><div><div class="unm">Aman Kumar</div><div class="url">Student &middot; Class 11</div></div><a href="/logout" class="lb">&#x21A5;</a></div></aside>
+<main class="main">
+  <div class="topbar"><div><div class="page-title">Learning Path</div><div class="page-sub">Your personalized AI-generated study roadmap</div></div><button class="tt" id="themeBtn" onclick="toggleTheme()">🌙</button></div>
+  <div class="path-tabs">
+    <div class="pt on" onclick="showSubj('math',this)">📐 Math</div>
+    <div class="pt" onclick="showSubj('science',this)">🔬 Science</div>
+    <div class="pt" onclick="showSubj('english',this)">📖 English ⚠️</div>
+    <div class="pt" onclick="showSubj('history',this)">🏛️ History</div>
+    <div class="pt" onclick="showSubj('cs',this)">💻 CS</div>
+    <div class="pt" onclick="showSubj('geo',this)">🌍 Geography ⚠️</div>
+  </div>
+  <div id="pathContent">
+    <div class="timeline" id="pathMath">
+      <div class="titem"><div class="tdot done">✓</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Algebra Basics</span><span class="pri-badge pri-l">Low Priority</span></div><div class="tcard-desc">Linear equations, variables, basic expressions. You have mastered this topic.</div><div class="topic-chips"><span class="tchip">Equations</span><span class="tchip">Variables</span><span class="tchip">Expressions</span></div></div></div>
+      <div class="titem"><div class="tdot current">▶</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Quadratic Equations</span><span class="pri-badge pri-m">Medium Priority</span></div><div class="tcard-desc">Factorization, quadratic formula, discriminant. Currently in progress — keep going!</div><div class="topic-chips"><span class="tchip">Factorization</span><span class="tchip">Formula</span><span class="tchip">Discriminant</span></div><div class="ai-note" id="n1">🤖 AI Note: Practice 10 problems daily. Focus on understanding the discriminant concept first, then move to complex problems. Use NCERT exercises for practice.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn-sm btn-ai" onclick="toggleNote('n1',this)">🤖 AI Notes</button><button class="btn-sm btn-done" id="d1" onclick="markDone('d1')">✅ Mark Done</button></div></div></div>
+      <div class="titem"><div class="tdot weak">!</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Trigonometry</span><span class="pri-badge pri-h">High Priority</span></div><div class="tcard-desc">Weak area detected! Sin, Cos, Tan ratios and identities need more practice.</div><div class="topic-chips"><span class="tchip" style="background:#fee2e2;color:#991b1b">Sin/Cos/Tan</span><span class="tchip" style="background:#fee2e2;color:#991b1b">Identities</span><span class="tchip">Triangles</span></div><div class="ai-note" id="n2">🤖 AI Note: Weak area! Start from basics — memorize SOH-CAH-TOA. Practice angle calculations daily. Watch video lectures before attempting problems.</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn-sm btn-ai" onclick="toggleNote('n2',this)">🤖 AI Notes</button><button class="btn-sm btn-done" id="d2" onclick="markDone('d2')">✅ Mark Done</button></div></div></div>
+      <div class="titem"><div class="tdot pending">○</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Statistics &amp; Probability</span><span class="pri-badge pri-m">Medium Priority</span></div><div class="tcard-desc">Mean, median, mode, probability concepts. Complete Trigonometry first.</div><div class="topic-chips"><span class="tchip">Mean/Median</span><span class="tchip">Probability</span><span class="tchip">Data</span></div><div style="display:flex;gap:8px"><button class="btn-sm btn-done" id="d3" onclick="markDone('d3')">✅ Mark Done</button></div></div></div>
+    </div>
+  </div>
+</main><script>
+(function(){var t=localStorage.getItem('t')||'light';document.documentElement.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙';})();
+function toggleTheme(){var c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('t',n);document.getElementById('themeBtn').textContent=n==='dark'?'☀️':'🌙';}
+function showToast(m){var t=document.getElementById('toastEl');if(!t)return;t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none';},3000);}
+
+var PATHS = {
+  math: document.getElementById('pathMath').innerHTML,
+  science: '<div class="titem"><div class="tdot done">✓</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Motion &amp; Forces</span><span class="pri-badge pri-l">Low Priority</span></div><div class="tcard-desc">Newton\'s laws, velocity, acceleration — completed well.</div><div class="topic-chips"><span class="tchip">Newton\'s Laws</span><span class="tchip">Velocity</span></div></div></div><div class="titem"><div class="tdot weak">!</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Organic Chemistry</span><span class="pri-badge pri-h">High Priority</span></div><div class="tcard-desc">Weak area! Carbon compounds and reactions need practice.</div><div class="topic-chips"><span class="tchip" style="background:#fee2e2;color:#991b1b">Carbon Compounds</span><span class="tchip">Reactions</span></div></div></div>',
+  english: '<div class="titem"><div class="tdot weak">!</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Grammar</span><span class="pri-badge pri-h">High Priority</span></div><div class="tcard-desc">Weak area! Tenses, sentence structure, and punctuation need immediate attention.</div><div class="topic-chips"><span class="tchip" style="background:#fee2e2;color:#991b1b">Tenses</span><span class="tchip" style="background:#fee2e2;color:#991b1b">Sentence Structure</span></div></div></div><div class="titem"><div class="tdot current">▶</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Reading Comprehension</span><span class="pri-badge pri-m">Medium Priority</span></div><div class="tcard-desc">In progress — focus on understanding context clues and inference.</div><div class="topic-chips"><span class="tchip">Context Clues</span><span class="tchip">Inference</span></div></div></div>',
+  history: '<div class="titem"><div class="tdot done">✓</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Mughal Empire</span><span class="pri-badge pri-l">Low Priority</span></div><div class="tcard-desc">Excellent! 100% score on this topic. Keep revising periodically.</div><div class="topic-chips"><span class="tchip">Akbar</span><span class="tchip">Mughal Administration</span></div></div></div><div class="titem"><div class="tdot weak">!</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Medieval Era</span><span class="pri-badge pri-h">High Priority</span></div><div class="tcard-desc">Weak area! Delhi Sultanate and regional kingdoms need more study.</div><div class="topic-chips"><span class="tchip" style="background:#fee2e2;color:#991b1b">Delhi Sultanate</span><span class="tchip">Kingdoms</span></div></div></div>',
+  cs: '<div class="titem"><div class="tdot done">✓</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Python Basics</span><span class="pri-badge pri-l">Completed</span></div><div class="tcard-desc">100% mastery! Variables, data types, and control flow. Excellent work!</div><div class="topic-chips"><span class="tchip">Variables</span><span class="tchip">Loops</span><span class="tchip">Functions</span></div></div></div><div class="titem"><div class="tdot current">▶</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Data Structures</span><span class="pri-badge pri-m">In Progress</span></div><div class="tcard-desc">Arrays, lists, stacks, queues. Currently studying — you are doing great!</div><div class="topic-chips"><span class="tchip">Arrays</span><span class="tchip">Stacks</span><span class="tchip">Queues</span></div></div></div>',
+  geo: '<div class="titem"><div class="tdot weak">!</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Climate &amp; Weather</span><span class="pri-badge pri-h">High Priority</span></div><div class="tcard-desc">Weak area! Monsoons, climate zones, and weather patterns need focus.</div><div class="topic-chips"><span class="tchip" style="background:#fee2e2;color:#991b1b">Monsoons</span><span class="tchip" style="background:#fee2e2;color:#991b1b">Climate Zones</span></div></div></div><div class="titem"><div class="tdot done">✓</div><div class="tcard"><div class="tcard-top"><span class="tcard-title">Indian Rivers</span><span class="pri-badge pri-l">Completed</span></div><div class="tcard-desc">Good knowledge of river systems. Keep revising map work.</div><div class="topic-chips"><span class="tchip">Ganga</span><span class="tchip">Brahmaputra</span><span class="tchip">Map Work</span></div></div></div>'
+};
+function showSubj(s, el) {
+  document.querySelectorAll('.pt').forEach(function(t){t.classList.remove('on')});
+  el.classList.add('on');
+  document.getElementById('pathContent').innerHTML = '<div class="timeline">' + PATHS[s] + '</div>';
+}
+function toggleNote(id, btn) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var visible = el.style.display === 'block';
+  el.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? '🤖 AI Notes' : '🙈 Hide Notes';
+}
+function markDone(id) {
+  var btn = document.getElementById(id);
+  if (!btn) return;
+  btn.classList.toggle('marked');
+  btn.textContent = btn.classList.contains('marked') ? '✓ Done' : '✅ Mark Done';
+}
+
+</script>
+</body></html>
